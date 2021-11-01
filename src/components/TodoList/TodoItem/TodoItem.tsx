@@ -42,21 +42,22 @@ function TodoItem(props: PropTypes) {
     return (
         <>
             <div className={'TodoItem'}>
-            <div title={contents} className={isCompleted ? 'TodoItem-Completed' : ''} onClick={() => onComplete(id)}>
-                {contents}
+                <div title={contents} className={isCompleted ? 'TodoItem-Completed' : ''}
+                     onClick={() => onComplete(id)}>
+                    {contents}
+                </div>
+                <div className={'TodoItem-Icons'}>
+                    <FaPen className={'TodoItem-Icons-Pen'} onClick={onModify}/>
+                    <MdClose className={'TodoItem-Icons-Close'} onClick={() => onDelete(id)}/>
+                </div>
             </div>
-            <div className={'TodoItem-Icons'}>
-                <FaPen className={'TodoItem-Icons-Pen'} onClick={onModify}/>
-                <MdClose className={'TodoItem-Icons-Close'} onClick={() => onDelete(id)}/>
-            </div>
-        </div>
             {
                 isModal &&
                 <TodoModal
                     setIsModal={setIsModal}
                     modifyContents={modifyContents}
                     setModifyContents={setModifyContents}
-                    onModifyTodo={onModifyTodo} />}
+                    onModifyTodo={onModifyTodo}/>}
         </>
 
     );
