@@ -1,14 +1,20 @@
-import React from 'react';
+import React,{ StrictMode } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { RecoilRoot} from "recoil";
+import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <StrictMode>
+        <RecoilRoot> {/* RecoilRoot provider를 이용하여 recoil을 사용가능하도록 설정해줍니다. */}
+            <Router>
+                <App />
+            </Router>
+        </RecoilRoot>
+    </StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
