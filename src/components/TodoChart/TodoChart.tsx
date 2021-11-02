@@ -9,11 +9,9 @@ interface ArcData {
 const MAX_DEGREE = 359.9;
 
 function TodoChart() {
-    const [isRender, setIsRender] = useState<boolean>(false);
-    useEffect(() => {
-        setIsRender(true);
-        drawCircle();
 
+    useEffect(() => {
+        drawCircle();
     }, []);
 
     const radius = 20; // 차트 반지름
@@ -21,12 +19,14 @@ function TodoChart() {
     const colors = ["#ff6554", "#ffdc2a", "#27ff3d", "#1f7cff", "#b611ff"];
     const dataset = [9, 7, 5, 3, 1];
     const degree = 90;
-    const radian = (degree/180)*Math.PI;
+    const nextPosition:any[] = [[50,50]];
+
     // 데이터의 총 합
     const total = dataset.reduce((r, v) => r + v, 0);
     // 도넛 시작점을 기억하기 위한  누적값
     const acc = dataset.reduce((result, value) => [...result, result[result.length - 1] + value], [0]);
     // circle 그리기
+    let accDegree = 0;
     const drawCircle = () => {
         const svg = document.getElementById('svg');
         dataset.forEach((data: number, i: number) => {
@@ -46,18 +46,20 @@ function TodoChart() {
             circle.setAttribute('stroke-dashoffset', String(-offset));
 
             const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            path.setAttribute('d', `${getArc({x:50, y:50, radius:radius, degree:MAX_DEGREE* radio})}`);
+            accDegree += MAX_DEGREE*radio;
+            path.setAttribute('d', `${getArc({x:50, y:50, radius:radius, degree:accDegree})}`);
             path.setAttribute('fill', 'transparent');
             path.setAttribute('stroke', colors[i]);
 
 
-            svg?.appendChild(circle);
+            // svg?.appendChild(circle);
             svg?.appendChild(path);
         });
     };
     // n도 벌어진 점의 좌표
     const getCoordsOnCircle = ({x,y,radius,degree}:ArcData) =>{
         const radian = (degree/180)*Math.PI;
+
         return {
             x:x+radius*Math.cos(radian),
             y:y+radius*Math.sin(radian)
@@ -68,14 +70,13 @@ function TodoChart() {
         const startCoord = getCoordsOnCircle({ ...data, degree: 0 });
         const finishCoord = getCoordsOnCircle({ ...data });
 
+        nextPosition.push([finishCoord.x,finishCoord.y])
+
         const { x, y, radius, degree } = data;
-        console.log(degree)
         const isLargeArc = degree > 180 ? 1 : 0;
         const isEnd = degree === MAX_DEGREE;
 
-        const d = `M ${startCoord.x} ${startCoord.y} A ${radius} ${radius} 0 ${isLargeArc} 1 ${finishCoord.x} ${
-            finishCoord.y
-        } L ${x} ${y} ${isEnd ? 'z' : ''}`;
+        const d = `M ${startCoord.x} ${startCoord.y} A ${radius} ${radius} 0 ${isLargeArc} 1 ${finishCoord.x} ${finishCoord.y} L ${x} ${y} ${isEnd ? 'z' : ''}`;
         return d;
     };
 
