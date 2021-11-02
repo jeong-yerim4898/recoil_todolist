@@ -6,8 +6,12 @@ import TodoTitle from '../TodoTitle/TodoTitle';
 import TodoFilters from "../TodoFilters/TodoFilters";
 import TodoListStats from "../TodoListStats/TodoListStats";
 import TodoChart from "../TodoChart/TodoChart";
+import {useRecoilValue} from "recoil";
+import {todoListStatsState} from "../../recoil/todo";
 
 function TodoTemplate() {
+
+
     return (
         <div className='TodoTemplate'>
             <div className='TodoTemplate-Contents'>
@@ -16,7 +20,7 @@ function TodoTemplate() {
                 <TodoInput/>
                 <TodoFilters/>
                 <TodoListStats/>
-                <TodoChart/>
+                {/*<TodoChart/>*/}
             </div>
         </div>
     );
