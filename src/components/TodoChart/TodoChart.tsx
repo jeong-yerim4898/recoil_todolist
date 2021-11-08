@@ -20,9 +20,9 @@ function TodoChart() {
 
     const radius = 80; // 차트 반지름
     const diameter = 2 * Math.PI * radius;// 원 둘레
-    const colors = ["#e02e1e", "#281B1AFF","#ff73cb","#fff75c","#93ff57"];
+    const colors = ["#e02e1e", "#281B1AFF", "#ff73cb", "#fff75c", "#93ff57"];
     // const dataset = [totalCompletedNum, totalUncompletedNum,];
-    const dataset = [35,8,2,3,10];
+    const dataset = [35, 8, 2, 3, 10];
     // 데이터의 총 합
     const total = dataset.reduce((r, v) => r + v, 0);
     // 도넛 시작점을 기억하기 위한  누적값
@@ -49,7 +49,7 @@ function TodoChart() {
 
     // n도 벌어진 점의 좌표
     const getCoordsOnCircle = ({x, y, radius, degree}: ArcData) => {
-        const radian = ((degree-90)/ 180) * Math.PI;
+        const radian = ((degree - 90) / 180) * Math.PI;
 
         return {
             x: x + radius * Math.cos(radian),
@@ -82,14 +82,14 @@ function TodoChart() {
                 const radio = v / total;
                 const rotateAngle = startRotate / total * MAX_DEGREE;
                 const d = getArc({x: 200, y: 200, radius, degree: radio * MAX_DEGREE});
-                const targetRad = 2 * Math.PI *radius* radio;
-                const targetRestRad = 2*Math.PI *radius *(1-radio);
+                const targetRad = 2 * Math.PI * radius * radio;
+                const targetRestRad = 2 * Math.PI * radius * (1 - radio);
                 return (
                     <path d={`${d}`}
-                             key={i}
-                             stroke={'transparent'}
-                             transform={`rotate(${rotateAngle},200,200) `}
-                             fill={colors[i]}/>
+                          key={i}
+                          stroke={'transparent'}
+                          transform={`rotate(${rotateAngle},200,200) `}
+                          fill={colors[i]}/>
                 )
             })
         }
