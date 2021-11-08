@@ -87,12 +87,10 @@ function TodoChart() {
                 return (
                     <path d={`${d}`}
                              key={i}
-                             stroke={colors[i]}
-                             strokeWidth={`40`}
+                             stroke={'transparent'}
                              transform={`rotate(${rotateAngle},200,200) `}
-                             fill={'none'} strokeDasharray={`${targetRad} ${targetRestRad}`} strokeDashoffset={'3'}/>
+                             fill={colors[i]}/>
                 )
-
             })
         }
         </>
@@ -102,8 +100,17 @@ function TodoChart() {
     return (
         <article className={'chart'}>
             <svg width={400} height={400} viewBox={"0 0 400 400"} id={'pi-svg'}>
+                <defs>
+                    <mask id="myMask">
+                        <circle cx={200} cy={200} r={200} fill={"white"}/>
+                        <circle cx={200} cy={200} r={20} fill={"black"}/>
+                    </mask>
+                </defs>
+
                 {/*<DrawCircle/>*/}
-                <DrawPi/>
+                <g mask={"url(#myMask)"}>
+                    <DrawPi/>
+                </g>
             </svg>
         </article>
     );
