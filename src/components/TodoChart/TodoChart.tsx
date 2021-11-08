@@ -79,7 +79,7 @@ function TodoChart() {
         return <>{
             dataset.map((v, i) => {
                 const startRotate = getStartRotate(i);
-                const radio = v / total; // 비율
+                const radio = v / total;
                 const rotateAngle = startRotate / total * MAX_DEGREE;
                 const d = getArc({x: 200, y: 200, radius, degree: radio * MAX_DEGREE});
                 const targetRad = 2 * Math.PI *radius* radio;
